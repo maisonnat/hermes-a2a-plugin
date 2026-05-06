@@ -61,6 +61,7 @@ nav:
   - Guides:
     - Usage: guides/usage.md
     - Configuration: guides/configuration.md
+    - OpenCode Integration: guides/opencode-integration.md
   - API Reference: api/reference.md
   - Research:
     - python-a2a SDK: research/python-a2a-sdk.md

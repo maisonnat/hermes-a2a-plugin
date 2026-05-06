@@ -1,0 +1,85 @@
+# Hermes A2A Plugin
+
+## Description
+A Hermes Agent plugin that adds A2A (Agent2Agent) protocol support. Enables any A2A-compatible agent (OpenCode, Claude Code, Codex) to discover and delegate tasks to Hermes.
+
+## Key Links
+- GitHub: https://github.com/maisonnat/hermes-a2a-plugin
+- Docs: https://maisonnat.github.io/hermes-a2a-plugin/
+- Hermes Agent: https://hermes-agent.nousresearch.com
+- A2A Protocol: https://github.com/a2aproject/A2A
+- Hermes Plugins Docs: https://hermes-agent.nousresearch.com/docs/user-guide/features/plugins/
+
+## Project Structure
+
+```
+hermes_a2a_plugin/       # Plugin source code
+├── __init__.py          # Plugin entry point — register() with hooks + tools
+├── plugin.yaml          # Hermes plugin manifest
+├── schemas.py           # LLM tool schemas (what the model sees)
+├── server.py            # A2A HTTP server — Agent Card + tasks/send
+├── bridge.py            # Bridge — A2A tasks → Hermes AIAgent
+├── bridge_mcp.py        # MCP server — OpenCode discovers Hermes as tools
+docs/                    # MkDocs documentation
+tests/                   # Test suite
+mkdocs.yml               # Documentation config
+```
+
+## Key Concepts
+
+### Plugin System
+- `register(ctx)` is called by Hermes PluginManager on session start
+- Available hooks: `session_start`, `session_end`, `pre_tool`, `post_tool`
+- Available registrations: tools, hooks, commands, skills, CLI subcommands
+
+### A2A Protocol (distinct from ACP)
+- Agent2Agent: Google → Linux Foundation, universal agent communication
+- NOT the same as ACP (Agent Client Protocol by Zed/JetBrains for IDE integration)
+- Uses JSON-RPC 2.0 over HTTP/SSE
+- Agent Card at `/.well-known/agent-card.json` for discovery
+- Task lifecycle: `submitted → working → completed | failed | canceled`
+
+### A2A Server
+- Python built-in `http.server` (zero external deps for MVP)
+- Can swap to Starlette + Uvicorn for production
+- Endpoints: `GET /health`, `GET /.well-known/agent-card.json`, `POST /tasks/send`
+
+### Python SDK Note
+The real A2A Python SDK lives in the `a2a-samples` repo (NOT the `a2a` PyPI package, which is a web scraper). Install from: https://github.com/a2aproject/a2a-samples
+
+## Quick Start
+```bash
+# Enable in Hermes
+hermes plugins enable hermes-a2a
+# Start server
+hermes a2a serve --port 4097
+# Test
+curl http://localhost:4097/.well-known/agent-card.json
+```
+
+## API Reference
+
+### POST /tasks/send
+JSON-RPC 2.0 task delegation:
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "params": {
+    "id": "task-id",
+    "message": {
+      "role": "user",
+      "parts": [{"text": "Do something"}]
+    }
+  }
+}
+```
+
+### GET /.well-known/agent-card.json
+Returns Agent Card with capabilities, skills, auth requirements.
+
+### GET /health
+Returns `{"status": "ok", "agent": "hermes-a2a-plugin"}`
+
+## License
+MIT — see LICENSE file

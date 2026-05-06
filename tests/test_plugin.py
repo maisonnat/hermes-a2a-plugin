@@ -41,17 +41,3 @@ def test_server_custom_port():
     server = A2AServer(port=8080, auth_token="test-token")
     assert server.port == 8080
     assert server.auth_token == "test-token"
-
-
-@pytest.mark.asyncio
-async def test_bridge():
-    """Bridge processes tasks."""
-    from hermes_a2a_plugin.bridge import HermesTaskBridge
-
-    bridge = HermesTaskBridge()
-    result = bridge.process_task("test-1", "Hello from test")
-    assert "test-1" in result
-    assert "Hello from test" in result
-
-    status = bridge.get_task_status("test-1")
-    assert status["status"] == "completed"

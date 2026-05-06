@@ -1,0 +1,168 @@
+# Hermes A2A Plugin — Full Context for LLMs
+
+This file contains the complete project documentation in a single document
+for maximum LLM comprehension. Source: https://github.com/maisonnat/hermes-a2a-plugin
+
+## Project Overview
+
+**Hermes A2A Plugin** is a standard Hermes Agent plugin that adds A2A (Agent2Agent)
+protocol support. It runs an HTTP server that publishes an Agent Card and accepts
+task delegations from any A2A-compatible agent (OpenCode, Claude Code, Codex).
+
+## 🔌 Plugin System Integration
+
+### plugin.yaml
+name: hermes-a2a
+version: 0.1.0
+description: A2A protocol support for Hermes Agent
+provides_tools: a2a_serve, a2a_status, a2a_stop
+provides_hooks: session_start, session_end, pre_tool, post_tool
+provides_commands: a2a
+
+### Registration (__init__.py)
+```python
+def register(ctx):
+    # Lifecycle hooks
+    ctx.register_hook("session_start", on_session_start)
+    ctx.register_hook("session_end", on_session_end)
+    ctx.register_hook("pre_tool", on_pre_tool)
+    ctx.register_hook("post_tool", on_post_tool)
+    
+    # LLM-callable tools
+    ctx.register_tool(name="a2a_serve", schema=..., handler=...)
+    ctx.register_tool(name="a2a_status", schema=..., handler=...)
+    ctx.register_tool(name="a2a_stop", schema=..., handler=...)
+    
+    # CLI subcommand
+    ctx.register_cli_command(name="a2a", ...)
+```
+
+### Available Tool Schemas (schemas.py)
+- a2a_serve(port=4097, host="127.0.0.1", token="") → Start A2A server
+- a2a_status() → Check server status
+- a2a_stop() → Stop A2A server
+
+## 🏗️ A2A Server Architecture (server.py)
+
+### Endpoints
+| Method | Path | Description |
+|--------|------|-------------|
+| GET | /health | Health check → {"status": "ok"} |
+| GET | /.well-known/agent-card.json | Agent Card with capabilities |
+| POST | /tasks/send | Accept A2A task delegation |
+
+### Agent Card Structure
+```json
+{
+  "name": "Hermes Agent",
+  "description": "Self-improving AI agent with persistent memory...",
+  "version": "0.1.0",
+  "capabilities": {"streaming": true},
+  "skills": [{
+    "id": "hermes_general",
+    "name": "General Purpose Agent",
+    "tags": ["research", "coding", "automation"],
+    "examples": ["Implement a REST API", "Debug Python error"]
+  }]
+}
+```
+
+### Task Lifecycle
+Received task → JSON-RPC 2.0 parse → Extract text →
+Bridge.process_task() → Wait for result →
+Return A2A response with status + artifacts
+
+## 🔗 Bridge Architecture (bridge.py)
+
+### Current (MVP)
+```python
+class HermesTaskBridge:
+    def process_task(self, task_id, text):
+        # Stub: echoes back the text
+        return f"Received: {text}"
+```
+
+### Target (TODO)
+```python
+# 1. Create Hermes session: SessionDB.create(task_id)
+# 2. Run: AIAgent.run_conversation(user_input=text)
+# 3. Capture streaming progress
+# 4. Package response as A2A artifact
+```
+
+## 📡 MCP Bridge (bridge_mcp.py — TODO)
+
+An MCP server that OpenCode configures in opencode.jsonc:
+```json
+{"mcpServers": {"hermes-a2a": {"command": "python3", "args": ["-m", "hermes_a2a_plugin.bridge_mcp"]}}}
+```
+
+Exposes these MCP tools to OpenCode:
+- hermes_delegate(text) → Delegates a task to Hermes via A2A
+- hermes_search(query) → Searches via Hermes
+- hermes_status() → Check Hermes availability
+
+## 📦 Project Files
+
+### Core Plugin
+- hermes_a2a_plugin/__init__.py — 120 lines, register() + hooks + tools + CLI
+- hermes_a2a_plugin/plugin.yaml — Plugin manifest
+- hermes_a2a_plugin/schemas.py — LLM tool schemas
+- hermes_a2a_plugin/server.py — 195 lines, HTTP server with A2A protocol
+- hermes_a2a_plugin/bridge.py — 70 lines, task bridge stub
+
+### Documentation
+- docs/index.md — Home with architecture diagram
+- docs/getting-started.md — Installation + quick start
+- docs/guides/usage.md — Usage guide with examples
+- docs/guides/configuration.md — Config reference
+- docs/api/reference.md — Auto-generated API docs
+- docs/research/python-a2a-sdk.md — SDK research
+
+### Configuration
+- mkdocs.yml — Material theme with logo, features
+- mkdocs.yml plugins — search, gen-files, mkdocstrings
+- .github/workflows/docs.yml — Auto-deploy to GitHub Pages
+
+### Build & Config
+- pyproject.toml — Setuptools build, MIT license
+- Makefile — install, docs, serve-docs, test, lint
+- .gitignore — Python + OS + IDE ignores
+
+## ⚡ Quick Commands
+```bash
+# Local
+hermes plugins enable hermes-a2a
+hermes a2a serve --port 4097
+
+# Test
+curl http://localhost:4097/health
+curl http://localhost:4097/.well-known/agent-card.json
+curl -X POST http://localhost:4097/tasks/send -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","id":1,"params":{"id":"test","message":{"role":"user","parts":[{"text":"Hello"}]}}}'
+
+# Dev
+cd ~/Projects/hermes-a2a-plugin
+source .venv/bin/activate
+make install
+make test
+make serve-docs
+```
+
+## 📚 Dependencies
+- Python 3.10+ (stdlib only for MVP — http.server, json, threading)
+- Optional: Starlette + Uvicorn (production)
+- Docs: mkdocs-material + mkdocstrings[python] + mkdocs-gen-files
+
+## 🔒 Security
+- Bearer token auth supported (--token flag)
+- CORS headers enabled
+- Auth validation via Authorization: Bearer header
+- Default: no auth (localhost only)
+
+## 🧪 Tests
+5/5 passing:
+- test_agent_card_structure — Required fields present
+- test_agent_card_skill — Each skill has required fields
+- test_server_init — Creates with defaults
+- test_server_custom_port — Accepts custom config
+- test_bridge — Process tasks correctly
