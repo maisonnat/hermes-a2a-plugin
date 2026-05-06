@@ -1,6 +1,6 @@
 # Hermes A2A Plugin — Full Context for LLMs
 
-> Auto-generated from source — last updated: 2026-05-06 15:42 UTC
+> Auto-generated from source — last updated: 2026-05-06 18:42 UTC
 > Version: 0.1.0
 
 ## Project Identity
