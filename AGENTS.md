@@ -1,6 +1,6 @@
 # Hermes A2A Plugin — Agent Context
 
-> Auto-generated from source — last updated: 2026-05-06 17:58 UTC
+> Auto-generated from source — last updated: 2026-05-06 15:42 UTC
 > Project version: 0.1.0
 
 ## Project Identity
@@ -34,6 +34,7 @@
 ## File Ownership
 | File | Purpose |
 |------|---------|
+| `a2a_client.py` | A2A Client — envía tareas A2A desde Hermes a cualquier target. |
 | `bridge.py` | Bridge — connects A2A task delegation to real Hermes execution. |
 | `bridge_mcp.py` | MCP (Model Context Protocol) bridge — connects OpenCode to Hermes. |
 | `schemas.py` | Tool schemas for the A2A plugin — what the LLM sees. |
@@ -55,7 +56,7 @@
 cd ~/Projects/hermes-a2a-plugin
 source .venv/bin/activate
 make install           # pip install -e .
-make test              # pytest -v (15 tests)
+make test              # pytest -v (26 tests)
 make docs              # mkdocs build --strict
 make serve-docs        # mkdocs serve
 make lint              # ruff check

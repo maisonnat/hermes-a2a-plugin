@@ -1,6 +1,6 @@
 # Hermes A2A Plugin — Full Context for LLMs
 
-> Auto-generated from source — last updated: 2026-05-06 17:58 UTC
+> Auto-generated from source — last updated: 2026-05-06 15:42 UTC
 > Version: 0.1.0
 
 ## Project Identity
@@ -18,6 +18,7 @@
 - **CLI Commands**: `hermes a2a`
 
 ## Python Modules
+- **a2a_client.py** — A2A Client — envía tareas A2A desde Hermes a cualquier target.
 - **bridge.py** — Bridge — connects A2A task delegation to real Hermes execution.
 - **bridge_mcp.py** — MCP (Model Context Protocol) bridge — connects OpenCode to Hermes.
 - **schemas.py** — Tool schemas for the A2A plugin — what the LLM sees.
@@ -73,7 +74,7 @@ submitted → working → completed
   - python-a2a SDK
 
 ## Tests
-- **Total**: 15 tests across 2 files
+- **Total**: 26 tests across 3 files
 - **Run**: `make test` or `python -m pytest tests/ -v`
 
 ## Latest Changelog

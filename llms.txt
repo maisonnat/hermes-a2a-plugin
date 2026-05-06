@@ -1,6 +1,6 @@
 # hermes-a2a-plugin
 
-> Auto-generated from source — last updated: 2026-05-06 17:58 UTC
+> Auto-generated from source — last updated: 2026-05-06 15:42 UTC
 > Version: 0.1.0
 > License: MIT
 
@@ -8,6 +8,7 @@
 A2A (Agent2Agent) protocol plugin for Hermes Agent
 
 ## Project Structure
+  - `a2a_client.py` — A2A Client — envía tareas A2A desde Hermes a cualquier target.
   - `bridge.py` — Bridge — connects A2A task delegation to real Hermes execution.
   - `bridge_mcp.py` — MCP (Model Context Protocol) bridge — connects OpenCode to Hermes.
   - `schemas.py` — Tool schemas for the A2A plugin — what the LLM sees.
@@ -33,7 +34,7 @@ curl http://localhost:4097/.well-known/agent-card.json
 ```
 
 ## Tests
-15 tests across 2 files
+26 tests across 3 files
 
 ## Documentation
 - Site: https://maisonnat.github.io/hermes-a2a-plugin/

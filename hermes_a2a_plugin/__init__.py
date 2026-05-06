@@ -17,6 +17,7 @@ Typical usage::
 import threading
 from .server import A2AServer
 from .schemas import A2A_SERVE_SCHEMA, A2A_STATUS_SCHEMA, A2A_STOP_SCHEMA
+from .a2a_client import A2A_DELEGATE_SCHEMA, A2A_CLIENT_SCHEMA, A2AClient
 
 # Module-level state for the background server
 _server_instance: A2AServer | None = None
@@ -57,6 +58,18 @@ def register(ctx: object) -> None:
         name="a2a_stop",
         schema=A2A_STOP_SCHEMA,
         handler=handle_a2a_stop,
+    )
+
+    # ── A2A Client tools ─────────────────────────────────────
+    ctx.register_tool(
+        name="a2a_delegate",
+        schema=A2A_DELEGATE_SCHEMA,
+        handler=handle_a2a_delegate,
+    )
+    ctx.register_tool(
+        name="a2a_client",
+        schema=A2A_CLIENT_SCHEMA,
+        handler=handle_a2a_client,
     )
 
     # CLI subcommand: hermes a2a serve
@@ -197,6 +210,78 @@ def handle_a2a_stop() -> str:
         _server_instance = None
         return "✓ A2A server stopped"
     return "✗ A2A server is not running"
+
+
+# ── A2A Client handlers ─────────────────────────────────
+
+
+def handle_a2a_delegate(task: str, target: str = "opencode", context: str = "") -> str:
+    """Delegate a task to another agent via A2A protocol.
+
+    Args:
+        task: Task description.
+        target: 'opencode' or an A2A server URL.
+        context: Optional context.
+
+    Returns:
+        Formatted result string.
+    """
+    client = A2AClient()
+    result = client.send(task=task, target=target, context=context)
+
+    lines = [f"📤 Delegate to {target}", f"   Task: {task[:100]}…" if len(task) > 100 else f"   Task: {task}"]
+    lines.append(f"   Status: {result.get('status', 'unknown')}")
+
+    if result.get("duration_s"):
+        lines.append(f"   ⏱ {result['duration_s']}s")
+
+    if result.get("stdout"):
+        lines.append(f"\n📄 Output:\n{result['stdout'][:2000]}")
+
+    if result.get("result"):
+        lines.append(f"\n📄 Result:\n{result['result'][:2000]}")
+
+    if result.get("message"):
+        lines.append(f"\nℹ️ {result['message']}")
+
+    return "\n".join(lines)
+
+
+def handle_a2a_client(action: str = "status", target: str = "") -> str:
+    """Manage A2A client configuration.
+
+    Args:
+        action: 'status', 'targets', or 'test'.
+        target: Optional target for 'test' action.
+
+    Returns:
+        Status information.
+    """
+    client = A2AClient()
+
+    if action == "targets":
+        targets = client.get_targets()
+        lines = ["📋 Available A2A targets:"]
+        for t in targets:
+            lines.append(f"  • {t['name']:25} {t['description']}")
+        return "\n".join(lines)
+
+    elif action == "test":
+        result = client.test_target(target or "opencode")
+        status_icon = "✅" if result.get("status") == "ok" else "❌"
+        return (
+            f"{status_icon} Target '{target or 'opencode'}': "
+            f"{result.get('version', result.get('message', 'unknown'))}"
+        )
+
+    else:  # status
+        return (
+            "A2A Client ready.\n"
+            "  • Targets: opencode (local bridge), http://host:port (remote A2A)\n"
+            "  • Use a2a_delegate to send tasks\n"
+            "  • Use a2a_client action=targets to list targets\n"
+            "  • Use a2a_client action=test to test connectivity"
+        )
 
 
 # ── CLI handlers ─────────────────────────────────────────
