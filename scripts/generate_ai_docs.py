@@ -53,7 +53,7 @@ def load_plugin_yaml() -> dict:
     if not path.exists():
         return {}
     with open(path) as f:
-        return yaml.safe_load(f)
+        return yaml.load(f, Loader=yaml.FullLoader)
 
 
 def list_modules() -> list[dict]:
@@ -168,8 +168,10 @@ def get_nav_structure() -> str:
     mkdocs_path = REPO_ROOT / "mkdocs.yml"
     if not mkdocs_path.exists():
         return ""
-    with open(mkdocs_path) as f:
-        config = yaml.safe_load(f)
+    # Strip !!python/name tags before parsing (MkDocs-specific syntax)
+    raw = mkdocs_path.read_text()
+    cleaned = re.sub(r"\s+format:\s*!!python/name:\S+\s*\n", "\n", raw)
+    config = yaml.safe_load(cleaned)
     nav = config.get("nav", [])
 
     lines = []

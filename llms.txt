@@ -1,6 +1,6 @@
 # hermes-a2a-plugin
 
-> Auto-generated from source — last updated: 2026-05-06 14:41 UTC
+> Auto-generated from source — last updated: 2026-05-06 14:55 UTC
 > Version: 0.1.0
 > License: MIT
 

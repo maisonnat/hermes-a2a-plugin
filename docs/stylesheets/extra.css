@@ -1,0 +1,329 @@
+/* ── Hermes A2A Plugin — Dark Theme ─────────────────────────
+   Black canvas, amber accents, developer-centric.
+   Based on DESIGN.md tokens.
+   Docs: https://squidfunk.github.io/mkdocs-material/customization/
+   ──────────────────────────────────────────────────────── */
+
+/* ── Brand Colors ────────────────────────────────────────── */
+:root {
+  --brand-black: #0a0a0f;
+  --brand-black-soft: #12121a;
+  --brand-black-muted: #1a1a25;
+  --brand-amber: #F59E0B;
+  --brand-amber-light: #FBBF24;
+  --brand-amber-dark: #D97706;
+  --brand-amber-glow: rgba(245, 158, 11, 0.12);
+  --brand-white: #F5F5F5;
+  --brand-white-soft: #A0A0B0;
+  --brand-white-muted: #6B6B80;
+  --border-color: rgba(255, 255, 255, 0.06);
+  --border-hover: rgba(245, 158, 11, 0.25);
+}
+
+/* ── Base ──────────────────────────────────────────────────── */
+[data-md-color-scheme="slate"] {
+  --md-default-bg-color: var(--brand-black);
+  --md-default-fg-color: var(--brand-white);
+  --md-default-fg-color--light: var(--brand-white-soft);
+  --md-default-fg-color--lighter: var(--brand-white-muted);
+  --md-default-fg-color--lightest: rgba(255, 255, 255, 0.05);
+  --md-typeset-color: var(--brand-white);
+  --md-typeset-a-color: var(--brand-amber);
+  --md-accent-fg-color: var(--brand-amber-light);
+  --md-code-bg-color: #0d0d14;
+  --md-code-fg-color: #e0e0e0;
+  --md-code-hl-color: rgba(245, 158, 11, 0.08);
+  --md-admonition-bg-color: var(--brand-black-soft);
+  --md-footer-bg-color: var(--brand-black-muted);
+  --md-footer-bg-color--dark: var(--brand-black);
+}
+
+/* ── Navigation ──────────────────────────────────────────────── */
+.md-sidebar {
+  background-color: var(--brand-black) !important;
+}
+
+.md-nav--primary .md-nav__item--active > .md-nav__link {
+  color: var(--brand-amber) !important;
+  border-left: 3px solid var(--brand-amber);
+  padding-left: 12px;
+}
+
+.md-nav--primary .md-nav__link:hover {
+  color: var(--brand-amber-light) !important;
+}
+
+.md-nav--secondary .md-nav__link--active {
+  color: var(--brand-amber) !important;
+}
+
+/* ── Header / Top Bar ────────────────────────────────────────── */
+.md-header {
+  background-color: rgba(10, 10, 15, 0.85) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.md-tabs {
+  background-color: var(--brand-black-muted) !important;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.md-tabs__link--active {
+  color: var(--brand-amber) !important;
+}
+
+/* ── Code Blocks ──────────────────────────────────────────────── */
+.md-typeset pre > code {
+  border-left: 3px solid var(--brand-amber);
+  background-color: #0d0d14 !important;
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.3);
+}
+
+.md-typeset .highlighttable .linenos {
+  border-right: 1px solid var(--border-color);
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.md-clipboard {
+  color: var(--brand-white-muted);
+}
+
+.md-clipboard:hover {
+  color: var(--brand-amber);
+}
+
+/* ── Links ────────────────────────────────────────────────────── */
+.md-typeset a {
+  color: var(--brand-amber);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.md-typeset a:hover {
+  color: var(--brand-amber-light);
+  text-decoration: underline;
+}
+
+.md-typeset a:active {
+  color: var(--brand-amber-dark);
+}
+
+/* ── Cards ────────────────────────────────────────────────────── */
+.md-typeset .grid.cards > ul > li,
+.md-typeset .grid > .card {
+  background-color: var(--brand-black-soft);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.md-typeset .grid.cards > ul > li:hover,
+.md-typeset .grid > .card:hover {
+  border-color: var(--border-hover);
+  box-shadow: 0 0 15px var(--brand-amber-glow);
+}
+
+/* ── Admonitions ──────────────────────────────────────────────── */
+.md-typeset .admonition,
+.md-typeset details {
+  background-color: var(--brand-black-soft) !important;
+  border: 1px solid var(--border-color);
+  box-shadow: none;
+}
+
+.md-typeset .admonition.note,
+.md-typeset details.note {
+  border-left: 4px solid #3B82F6;
+}
+
+.md-typeset .admonition.warning,
+.md-typeset details.warning {
+  border-left: 4px solid var(--brand-amber);
+}
+
+.md-typeset .admonition.danger,
+.md-typeset details.danger {
+  border-left: 4px solid #EF4444;
+}
+
+.md-typeset .admonition.success,
+.md-typeset details.success {
+  border-left: 4px solid #10B981;
+}
+
+/* ── Tables ────────────────────────────────────────────────────── */
+.md-typeset table:not(.highlighttable) {
+  background-color: var(--brand-black-soft);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.md-typeset table:not(.highlighttable) th {
+  background-color: var(--brand-black-muted);
+  color: var(--brand-amber);
+  font-weight: 600;
+  border-bottom: 2px solid var(--brand-amber);
+}
+
+.md-typeset table:not(.highlighttable) td {
+  border-bottom: 1px solid var(--border-color);
+}
+
+.md-typeset table:not(.highlighttable) tr:hover td {
+  background-color: rgba(245, 158, 11, 0.03);
+}
+
+/* ── Search ────────────────────────────────────────────────────── */
+.md-search__form {
+  background-color: var(--brand-black-muted) !important;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+}
+
+.md-search__form:hover {
+  border-color: var(--border-hover);
+}
+
+.md-search__output {
+  background-color: var(--brand-black-soft) !important;
+  border: 1px solid var(--border-color);
+}
+
+/* ── Footer ────────────────────────────────────────────────────── */
+.md-footer {
+  border-top: 1px solid var(--border-color);
+}
+
+.md-footer-meta {
+  background-color: var(--brand-black) !important;
+}
+
+/* ── Content / Typography ──────────────────────────────────────── */
+.md-typeset h1 {
+  color: var(--brand-white);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.md-typeset h2 {
+  color: var(--brand-white);
+  font-weight: 600;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 0.3em;
+}
+
+.md-typeset h3 {
+  color: var(--brand-amber);
+  font-weight: 600;
+}
+
+.md-typeset h4, .md-typeset h5, .md-typeset h6 {
+  color: var(--brand-white-soft);
+  font-weight: 500;
+}
+
+/* ── Horizontal Rule ────────────────────────────────────────────── */
+.md-typeset hr {
+  border-color: var(--border-color);
+}
+
+/* ── Scrollbar ──────────────────────────────────────────────────── */
+.md-sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.md-sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.md-sidebar::-webkit-scrollbar-thumb {
+  background: var(--brand-white-muted);
+  border-radius: 3px;
+}
+
+.md-sidebar::-webkit-scrollbar-thumb:hover {
+  background: var(--brand-white-soft);
+}
+
+/* ── Mermaid Diagrams ──────────────────────────────────────────── */
+.mermaid {
+  background-color: var(--brand-black-muted);
+  border-radius: 8px;
+  padding: 1rem;
+  border: 1px solid var(--border-color);
+}
+
+.mermaid svg {
+  background-color: var(--brand-black-muted);
+}
+
+.mermaid .label text {
+  fill: var(--brand-white) !important;
+}
+
+.mermaid .edgeLabel {
+  background-color: var(--brand-black-muted) !important;
+  color: var(--brand-white-soft) !important;
+}
+
+.mermaid .node rect,
+.mermaid .node circle,
+.mermaid .node polygon {
+  fill: var(--brand-black-soft) !important;
+  stroke: var(--brand-amber) !important;
+  stroke-width: 1.5px;
+}
+
+.mermaid .edgePath .path {
+  stroke: var(--brand-white-muted) !important;
+}
+
+/* ── Image Borders ──────────────────────────────────────────────── */
+.md-typeset img {
+  border-radius: 8px;
+}
+
+/* ── Logo in header ────────────────────────────────────────────── */
+.md-header__button.md-logo img {
+  height: 1.8rem;
+}
+
+/* ── Prev / Next Pagination ────────────────────────────────────── */
+.md-footer__inner {
+  border-top: 1px solid var(--border-color);
+}
+
+.pagination-nav__link {
+  background-color: var(--brand-black-soft);
+  border: 1px solid var(--border-color);
+  transition: border-color 0.2s ease;
+}
+
+.pagination-nav__link:hover {
+  border-color: var(--border-hover);
+}
+
+.pagination-nav__label {
+  color: var(--brand-amber);
+}
+
+/* ── Active Tab Highlight ──────────────────────────────────────── */
+.md-tabs__link--active,
+.md-tabs__link:hover {
+  color: var(--brand-amber) !important;
+}
+
+/* ── Tooltip / Button styling ─────────────────────────────────── */
+.md-tooltip {
+  background-color: var(--brand-black-muted);
+  border: 1px solid var(--border-color);
+  color: var(--brand-white);
+}
+
+/* ── Dark color scheme toggle ──────────────────────────────────── */
+[data-md-color-scheme="slate"] .md-typeset .task-list-control [type="checkbox"]:checked + .task-list-indicator::before {
+  background-color: var(--brand-amber);
+}
