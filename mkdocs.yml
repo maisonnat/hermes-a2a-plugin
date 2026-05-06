@@ -1,9 +1,13 @@
 site_name: Hermes A2A Plugin
 site_description: A2A (Agent2Agent) protocol plugin for Hermes Agent
-site_url: https://yourusername.github.io/hermes-a2a-plugin/
-repo_url: https://github.com/yourusername/hermes-a2a-plugin
+site_url: https://maisonnat.github.io/hermes-a2a-plugin/
+repo_url: https://github.com/maisonnat/hermes-a2a-plugin
+repo_name: maisonnat/hermes-a2a-plugin
+
 theme:
   name: material
+  logo: assets/logo.png
+  favicon: assets/logo.png
   palette:
     - scheme: default
       primary: indigo

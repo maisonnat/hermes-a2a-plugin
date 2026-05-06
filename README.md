@@ -1,7 +1,7 @@
 # Hermes A2A Plugin 🔌
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Documentation](https://img.shields.io/badge/docs-mkdocs-blue)](https://yourusername.github.io/hermes-a2a-plugin/)
+[![Documentation](https://img.shields.io/badge/docs-mkdocs-blue)](https://maisonnat.github.io/hermes-a2a-plugin/)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](pyproject.toml)
 
 > **A Hermes Agent plugin that adds A2A (Agent2Agent) protocol support.**  
