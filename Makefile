@@ -1,4 +1,4 @@
-.PHONY: install dev install-docs docs serve-docs test lint clean
+.PHONY: install dev install-docs docs serve-docs test lint ai-docs clean
 
 install:
 	pip install -e .
@@ -10,10 +10,13 @@ install-docs:
 	pip install -e ".[docs]"
 
 docs:
-	mkdocs build
+	mkdocs build --strict
 
 serve-docs:
-	mkdocs serve
+	mkdocs serve --strict
+
+ai-docs:
+	python3 scripts/generate_ai_docs.py
 
 test:
 	python -m pytest tests/ -v
