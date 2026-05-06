@@ -1,0 +1,18 @@
+name: hermes-a2a
+version: 0.1.0
+description: A2A (Agent2Agent) protocol support for Hermes Agent
+author: Alejandro Maisonnat
+
+provides_tools:
+  - a2a_serve
+  - a2a_status
+  - a2a_stop
+
+provides_hooks:
+  - session_start
+  - session_end
+  - pre_tool
+  - post_tool
+
+provides_commands:
+  - a2a
