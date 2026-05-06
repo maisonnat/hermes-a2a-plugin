@@ -12,14 +12,10 @@ For the MVP, mode 1 is used — it's reliable, requires no internal
 coupling, and handles all Hermes features (memory, skills, tools).
 """
 
-import asyncio
-import json
 import logging
 import subprocess
 import time
-from dataclasses import dataclass, field
-from pathlib import Path
-from typing import Optional
+from dataclasses import dataclass
 
 logger = logging.getLogger("hermes-a2a.bridge")
 

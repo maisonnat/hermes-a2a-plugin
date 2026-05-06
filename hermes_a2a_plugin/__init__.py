@@ -14,7 +14,6 @@ Typical usage::
     # 2. Send task:       POST http://localhost:4097/tasks/send
 """
 
-import os
 import threading
 from .server import A2AServer
 from .schemas import A2A_SERVE_SCHEMA, A2A_STATUS_SCHEMA, A2A_STOP_SCHEMA
@@ -217,7 +216,7 @@ def cli_a2a_serve(port=4097, host="127.0.0.1", token=""):
     server = A2AServer(host=host, port=port, auth_token=token)
     print(f"🚀 Hermes A2A Server ({server.version})")
     print(f"📍 http://{host}:{port}")
-    print(f"📋 /.well-known/agent-card.json")
-    print(f"🔌 /tasks/send")
+    print("📋 /.well-known/agent-card.json")
+    print("🔌 /tasks/send")
     print("Press Ctrl+C to stop")
     server.run()
