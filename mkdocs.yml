@@ -58,9 +58,12 @@ markdown_extensions:
 nav:
   - Home: index.md
   - Getting Started: getting-started.md
+  - Architecture: architecture.md
   - Guides:
     - Usage: guides/usage.md
     - Configuration: guides/configuration.md
+    - Development: guides/development.md
+    - Troubleshooting: guides/troubleshooting.md
     - OpenCode Integration: guides/opencode-integration.md
   - API Reference:
     - Plugin: api/reference.md
