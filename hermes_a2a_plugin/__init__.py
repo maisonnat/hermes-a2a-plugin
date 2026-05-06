@@ -26,7 +26,7 @@ _server_thread: threading.Thread | None = None
 """Background thread running the A2A server."""
 
 
-def register(ctx):
+def register(ctx: object) -> None:
     """Register plugin hooks, tools, and CLI commands with Hermes.
 
     Called automatically by Hermes PluginManager on session start.
@@ -143,7 +143,7 @@ def on_post_tool(tool_result):
 # ── Tool handlers ─────────────────────────────────────────
 
 
-def handle_a2a_serve(port: int = 4097, host: str = "127.0.0.1", token: str = ""):
+def handle_a2a_serve(port: int = 4097, host: str = "127.0.0.1", token: str = "") -> str:
     """Start the A2A server in a background thread.
 
     Args:
@@ -172,7 +172,7 @@ def handle_a2a_serve(port: int = 4097, host: str = "127.0.0.1", token: str = "")
     )
 
 
-def handle_a2a_status():
+def handle_a2a_status() -> str:
     """Check if the A2A server is running.
 
     Returns:
@@ -186,7 +186,7 @@ def handle_a2a_status():
     return "✗ A2A server is not running"
 
 
-def handle_a2a_stop():
+def handle_a2a_stop() -> str:
     """Stop the A2A server if running.
 
     Returns:

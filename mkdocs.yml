@@ -62,6 +62,11 @@ nav:
     - Usage: guides/usage.md
     - Configuration: guides/configuration.md
     - OpenCode Integration: guides/opencode-integration.md
-  - API Reference: api/reference.md
+  - API Reference:
+    - Plugin: api/reference.md
+    - Server: api/server.md
+    - Bridge: api/bridge.md
+    - MCP Bridge: api/bridge_mcp.md
+    - Schemas: api/schemas.md
   - Research:
     - python-a2a SDK: research/python-a2a-sdk.md

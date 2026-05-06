@@ -288,7 +288,7 @@ class A2AServer:
         host: str = "127.0.0.1",
         port: int = 4097,
         auth_token: str = "",
-        bridge=None,
+        bridge: object = None,
     ):
         """Initialize the A2A server.
 
@@ -296,7 +296,7 @@ class A2AServer:
             host: Bind address.
             port: HTTP port.
             auth_token: Bearer token for authentication (empty = no auth).
-            bridge: Task bridge instance for processing delegations.
+            bridge: Task bridge instance (e.g. HermesTaskBridge) for processing.
         """
         self.host = host
         self.port = port

@@ -57,6 +57,12 @@ hermes a2a serve --port 4097
 curl http://localhost:4097/.well-known/agent-card.json
 ```
 
+## Auto-Documentation Pipeline
+- MkDocs + mkdocstrings: extracts Google-style docstrings from Python code
+- mkdocs-gen-files: auto-discovers new Python files for API reference
+- GitHub Actions: auto-deploys docs to GitHub Pages on every push to main
+- llms.txt + AGENTS.md: provide structured context for LLMs and coding agents
+
 ## API Reference
 
 ### POST /tasks/send
